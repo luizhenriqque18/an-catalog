@@ -3,5 +3,12 @@ table {
 }
 
 .mat-column-action {
-  width: 10%; 
+  width: 10%;
+}
+
+.add-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding: 20px;
 }

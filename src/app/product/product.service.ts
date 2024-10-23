@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Page, PageOption, Product, Response } from './product';
+import { Direction, Page, PageOption, Product, Response } from './product';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,12 +17,26 @@ export class ProductService {
       page: String(page.page - 1),
       size: page.size,
       sort: 'id',
-      direction: 'ASC'
+      direction: Direction.DESC,
     };
-    return this.http.get<Response<Product[]>>(this.url, { params: {...pageResult} });
+    return this.http.get<Response<Product[]>>(this.url, {
+      params: { ...pageResult },
+    });
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
+  }
+
+  create(item: Product): Observable<string> {
+    return this.http.post<string>(`${this.url}`, { ...item }, {
+      responseType: 'text' as 'json'
+    });
+  }
+
+  update(item: Product): Observable<string> {
+    return this.http.patch<string>(`${this.url}/${item.id}`, { ...item }, {
+      responseType: 'text' as 'json'
+    });
   }
 }

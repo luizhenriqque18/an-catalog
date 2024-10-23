@@ -3,11 +3,19 @@ export interface Product {
   price: number;
   name: string;
   description: string;
-  category: Category;
+  categoryResponse: Category;
+}
+
+export interface ProductForm {
+  id: string;
+  price: number;
+  name: string;
+  description: string;
+  category: number;
 }
 
 export interface Category {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -31,6 +39,6 @@ export interface PageOption {
 }
 
 export enum Direction {
-  ASC,
-  DESC,
+  ASC = 'ASC',
+  DESC = 'DESC',
 }

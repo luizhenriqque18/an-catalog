@@ -1,4 +1,11 @@
 <div class="mat-elevation-z8">
+  <div class="add-product">
+    <button mat-fab extended (click)="new()">
+      <mat-icon>add</mat-icon>
+      Produto
+    </button>
+  </div>
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>Id</th>
