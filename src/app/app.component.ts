@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+import { HeaderComponent } from './shared/header/header.component';
 
 @Component({
   selector: 'app-root',
   styles: [],
   template: `
-      <h1>Hello world!</h1>
+    <app-header></app-header>
+    <router-outlet></router-outlet>
     `,
   standalone: true,
-  imports: []
+  imports: [RouterOutlet, HeaderComponent]
 })
 export class AppComponent {
   title = 'catalog';
