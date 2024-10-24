@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+}
+
+.mat-column-action {
+  width: 10%;
+}
+
+.add-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding: 20px;
+}

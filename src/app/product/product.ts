@@ -1,3 +1,5 @@
+import { Category } from "../category/category";
+
 export interface Product {
   id: string;
   price: number;
@@ -12,11 +14,6 @@ export interface ProductForm {
   name: string;
   description: string;
   category: number;
-}
-
-export interface Category {
-  id: number;
-  name: string;
 }
 
 export interface Response<T> {

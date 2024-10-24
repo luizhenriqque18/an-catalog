@@ -85,17 +85,6 @@ export class ProductListComponent implements AfterViewInit {
     );
   }
 
-  /* 
-  () => {},
-        () => {
-          this.handlePage({
-            size: this.paginatorResult.pageSize,
-            page: this.paginatorResult.page + 1,
-            sort: 'id',
-            direction: Direction.ASC,
-          });
-        }; */
-
   edit(item: Product) {
     this.handlerOpenDialog(item).subscribe((result: ProductForm) => {
       if(result !== undefined) {

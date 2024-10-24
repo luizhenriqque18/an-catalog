@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Category, Product, Response } from '../product/product';
+import { Direction, PageOption, Product, Response } from '../product/product';
 import { Observable } from 'rxjs';
+import { Category } from './category';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,29 @@ export class CategoryService {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
+  }
+
+  loadPage(page: PageOption): Observable<Response<Category[]>> {
+    const pageResult = {
+      page: String(page.page - 1),
+      size: page.size,
+      sort: 'id',
+      direction: Direction.DESC,
+    };
+    return this.http.get<Response<Category[]>>(this.url, {
+      params: { ...pageResult },
+    });
+  }
+
+  create(item: Category): Observable<string> {
+    return this.http.post<string>(`${this.url}`, { ...item }, {
+      responseType: 'text' as 'json'
+    });
+  }
+
+  update(item: Category): Observable<string> {
+    return this.http.patch<string>(`${this.url}/${item.id}`, { ...item }, {
+      responseType: 'text' as 'json'
+    });
   }
 }
