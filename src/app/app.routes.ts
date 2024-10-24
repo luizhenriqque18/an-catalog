@@ -9,6 +9,6 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'management',
-    component: ManagementComponent
+    component: ManagementComponent,
   },
 ];

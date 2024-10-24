@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-list',
@@ -20,6 +21,7 @@ export class ProductListComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'price', 'description', 'action'];
   private service = inject(ProductService);
+  private _snackBar = inject(MatSnackBar);
   public dataSource = new MatTableDataSource<Product>();
   paginatorResult: Page = {
     page: 0,
@@ -57,7 +59,9 @@ export class ProductListComponent implements AfterViewInit {
   delete(item: Product) {
     this.service.delete(item.id).subscribe(
       () => {},
-      () => {},
+      (err) => {
+        this._snackBar.open(err.error, 'Ok', { duration: 5000 });
+      },
       () => {
         this.handlePage({
           size: this.paginatorResult.pageSize,
@@ -72,31 +76,39 @@ export class ProductListComponent implements AfterViewInit {
   new() {
     this.handlerOpenDialog().subscribe(
       (result: ProductForm) => {
-        if(result !== undefined) {
+        if (result !== undefined) {
           var productDto: Product = {
             ...result,
             categoryResponse: { id: Number(result.category), name: '' },
           };
           this.service.create(productDto).subscribe((r) => {
-            this.relaodProductAll()
-          })
+            this.relaodProductAll();
+          });
         }
+      },
+      (err) => {
+        this._snackBar.open(err.error, 'Ok', { duration: 5000 });
       }
     );
   }
 
   edit(item: Product) {
-    this.handlerOpenDialog(item).subscribe((result: ProductForm) => {
-      if(result !== undefined) {
-        var productDto: Product = {
-          ...result,
-          categoryResponse: { id: Number(result.category), name: '' },
-        };
-        this.service.update(productDto).subscribe((r) => {
-          this.relaodProductAll()
-        })
+    this.handlerOpenDialog(item).subscribe(
+      (result: ProductForm) => {
+        if (result !== undefined) {
+          var productDto: Product = {
+            ...result,
+            categoryResponse: { id: Number(result.category), name: '' },
+          };
+          this.service.update(productDto).subscribe((r) => {
+            this.relaodProductAll();
+          });
+        }
+      },
+      (err) => {
+        this._snackBar.open(err.error, 'Ok', { duration: 5000 });
       }
-    });
+    );
   }
 
   relaodProductAll() {
